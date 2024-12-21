@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block head_title %}
+    Homepage - {{block.super}}
+{% endblock head_title %}
+
+{% block content %}
+    <h1> Current Tasks </h1>
+    {% if task_qs %}
+    <ol>
+        {% for task in task_qs  %}
+            <li>
+                {% if task.completed is True %}
+                    <s>{{ task }}</s>
+                {% else %}
+                    {{ task }}
+                {% endif %}
+            
+            {{ task.id }}
+            <form action="{% url 'task_handler' task.id %}" method="POST">
+                {% csrf_token %}
+                <input type="submit" value="Delete" name="delete_task">
+                <input type="submit" value="Completed" name="complete_task">
+            </form>
+            </li>
+        {% endfor %}
+    </ol>
+    {% endif %}
+
+    <form action="{% url 'tasks' %}" method="POST">
+        {% csrf_token %}
+        <label for="addtask">Add a task:</label>
+        <input type="text" id="addtask" name="addtask"><br><br>
+        <input type="submit" value="Submit">
+    </form>
+{% endblock content %}
+

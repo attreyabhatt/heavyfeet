@@ -17,8 +17,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from hfhome.views import home_view
+from dailytasks.views import task_view,task_handle_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home_view, name='home'),
+    path('tasks/', task_view, name='tasks'),
+    path('tasks/<int:task_id>', task_handle_view,name='task_handler'),
 ]
