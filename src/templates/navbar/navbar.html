@@ -16,11 +16,26 @@
     </ul>
 
     <div class="col-md-3 text-end">
-      <a href="{% url 'account_login' %}" class="d-inline-flex link-body-emphasis text-decoration-none">
-        <button type="button" class="btn btn-outline-primary me-2">Login</button>
-      </a>
-      <a href="{% url 'account_signup' %}" class="d-inline-flex link-body-emphasis text-decoration-none">
-      <button type="button" class="btn btn-primary">Sign-up</button>
-      </a>
+      {% if request.user.is_authenticated %}
+      
+
+      <div class="dropdown">
+        <button class="btn btn-outline-primary me-2 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          {{request.user.username}}
+        </button>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="{% url 'account_logout' %}">Logout</a></li>
+        </ul>
+      </div>
+      
+      {% else %}
+        <a href="{% url 'account_login' %}" class="d-inline-flex link-body-emphasis text-decoration-none">
+          <button type="button" class="btn btn-outline-primary me-2">Login</button>
+        </a>
+        <a href="{% url 'account_signup' %}" class="d-inline-flex link-body-emphasis text-decoration-none">
+        <button type="button" class="btn btn-primary">Sign-up</button>
+        </a>
+      {% endif %}
+      
     </div>
 </header>
