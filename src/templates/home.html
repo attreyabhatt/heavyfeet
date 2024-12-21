@@ -5,7 +5,11 @@
 {% endblock head_title %}
 
 {% block content %}
-    <h1 class="text-3xl font-bold underline">hello world</h1>
+    {% if request.user.is_authenticated %}
+    You are a user : {{request.user.username}}
+    {% else %}
+    You are NOT a user
+    {% endif %}
     <p>
         <a href='/tasks'>Add task here</a>
     </p>
