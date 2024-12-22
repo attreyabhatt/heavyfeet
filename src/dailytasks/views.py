@@ -1,7 +1,10 @@
 from django.shortcuts import render,redirect
 from dailytasks.models import UserTask
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+
+@login_required
 def task_view(request):
     if request.method == "POST":
         current_task = request.POST['addtask']
@@ -13,6 +16,7 @@ def task_view(request):
     }
     return render(request,"tasks/task.html",context)
 
+@login_required
 def task_handle_view(request,task_id):
     current_task = UserTask.objects.get(id=task_id)
     

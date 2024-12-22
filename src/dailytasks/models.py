@@ -1,8 +1,11 @@
 from django.db import models
+from django.conf import settings
 
+User = settings.AUTH_USER_MODEL ##auth.user
 # Create your models here.
 
 class UserTask(models.Model):
+    author = models.ForeignKey(User,on_delete=models.CASCADE)
     task_name = models.TextField(blank=True,null=True)
     completed = models.BooleanField(default=False)
     
