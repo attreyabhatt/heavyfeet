@@ -5,33 +5,55 @@
 {% endblock head_title %}
 
 {% block content %}
-    <h1> Current Tasks </h1>
-    {% if task_qs %}
-    <ol>
-        {% for task in task_qs  %}
-            <li>
-                {% if task.completed is True %}
-                    <s>{{ task }}</s>
-                {% else %}
-                    {{ task }}
-                {% endif %}
-            
-            {{ task.id }}
-            <form action="{% url 'task_handler' task.id %}" method="POST">
-                {% csrf_token %}
-                <input type="submit" value="Delete" name="delete_task">
-                <input type="submit" value="Completed" name="complete_task">
-            </form>
-            </li>
-        {% endfor %}
-    </ol>
-    {% endif %}
+    
+        <form action="{% url 'tasks' %}" method="POST">
+            {% csrf_token %}
+            <div class="row mt-5" >
+                <div class="col" style="">
+                    <label for="Adding a Task" class="form-label float-end align-middle">Add a task</label>
+                </div>
+                <div class="col">
+                    <input type="text" id="addtask" name="addtask" class="form-control">
+                </div>
+                <div class="col">
+                    <button type="submit" class="btn btn-primary float-start">Submit</button>
+                </div>
+            </div>
+        </form>
+    
+    
+    <div class="row text-center mt-5 mb-5">
+        {% if number_of_tasks_completed > 1 %}
+        <p>You have completed {{number_of_tasks_completed}} tasks.</p>
+        {% elif number_of_tasks_completed == 1 %}
+        <p>You have completed {{number_of_tasks_completed}} task.</p>
+        {% endif %}
+    </div>
+    
+    <div class="row">
+        {% if task_qs %}
+            {% for task in task_qs  %}
+                <div class="col float-start">
+                    <div class="card">
+                        <div class="card-body">
+                            {% if task.completed is True %}
+                            <s>{{ task }}</s>
+                            {% else %}
+                                {{ task }}
+                                <form action="{% url 'task_handler' task.id %}" method="POST">
+                                    {% csrf_token %}
+                                    <input type="submit" value="Delete" name="delete_task">
+                                    <input type="submit" value="Completed" name="complete_task">
+                                </form>
+                            {% endif %}
+                        </div>
+                      </div>
+                </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    
 
-    <form action="{% url 'tasks' %}" method="POST">
-        {% csrf_token %}
-        <label for="addtask">Add a task:</label>
-        <input type="text" id="addtask" name="addtask"><br><br>
-        <input type="submit" value="Submit">
-    </form>
+    
 {% endblock content %}
 

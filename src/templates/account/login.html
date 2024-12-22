@@ -22,12 +22,12 @@
         {% element form form=form method="post" action=login_url tags="entrance,login" %}
             {% slot body %}
                 {% csrf_token %}
-                {% element fields form=form unlabeled=True %}
+                {% element fields form=form unlabeled=True class="form-control" %}
                 {% endelement %}
                 {{ redirect_field }}
             {% endslot %}
             {% slot actions %}
-                {% element button type="submit" tags="prominent,login" %}
+                {% element button type="submit" tags="prominent,login" class="btn btn-primary" %}
                     {% trans "Sign In" %}
                 {% endelement %}
             {% endslot %}
